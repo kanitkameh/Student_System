@@ -23,6 +23,7 @@ public class DataBase {
 			ResultSet executedQuery = preparedStatement.executeQuery();
 			return executedQuery;
 		}catch(Exception e){
+			System.out.println("An exception has bee caught:");
 			System.out.println(e.getStackTrace());
 		}
 		return null;
