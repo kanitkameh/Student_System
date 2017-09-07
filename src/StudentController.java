@@ -31,5 +31,4 @@ public class StudentController {
 	static void insertStudent(String firstName, String lastName) {
 		db.executeQuery("insert into students (first_name,last_name) values('"+firstName+"','"+lastName+"')");
 	}
-
 }

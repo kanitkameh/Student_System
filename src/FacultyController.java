@@ -26,10 +26,16 @@ public class FacultyController {
 	static void deleteFaculty(String name) {
 		db.executeQuery("DELETE FROM faculties where faculty_name = "+name);
 		//another statement for removal of all studs in the following faculty
+		
 	}
-	static void deleteFaculty(int id) {
+	static void deleteFaculty(int id) throws SQLException {
+		//selects all students from this faculty and deletes them
+		queryResult = db.executeQuery("Select student_id from studentfaculties where faculty_id="+id);
+		while(queryResult.next()) {
+			db.executeQuery("DELETE FROM students where id="+queryResult.getInt(1));
+		}
+		//deletes the faculty
 		db.executeQuery("DELETE FROM faculties where id = "+id);
-		//another statement for removal of all studs in the following faculty
 	}
 	static void showAllFaculties() throws SQLException {
 		queryResult = db.executeQuery("SELECT * FROM faculties");

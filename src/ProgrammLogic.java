@@ -1,14 +1,16 @@
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 public class ProgrammLogic {
 	
 	static DataBase db;
 	static ResultSet queryResult;
+	static Scanner input;
 	
 	public static void main(String[] args) throws SQLException {
 		db = new DataBase("jdbc:postgresql://localhost:2704/geekyCamp", "postgres", "12345");
-		
+		input = new Scanner(System.in);
 		StudentController.setDb(db);
 		StudentController.setQueryResult(queryResult);
 		
@@ -17,16 +19,112 @@ public class ProgrammLogic {
 		
 		FacultyController.setDb(db);
 		FacultyController.setQueryResult(queryResult);
+		int choice=0;
+		while(true) {
+			System.out.println("Type 1 for viewing a table, 2 for inserting a new element, 3 for deleting an element and 4 for exit:");
+			choice=input.nextInt();
+			switch(choice){
+			case 1:view();
+				break;
+			case 2:insert();
+				break;
+			case 3:delete();
+				break;
+			case 4:input.close(); 
+				return;
+			}
+		}
+	}
+	static void view() throws SQLException {
+		System.out.println("Choose which records do you want to see:");
+		printTables();
+		switch(input.nextInt()) {
+		case 1:StudentController.showAllStudents();
+			break;
+		case 2:CoursesController.showAllCourses();
+			break;
+		case 3:CoursesController.showStudentCourses();
+			break;
+		case 4:FacultyController.showAllFaculties();
+			break;
+		case 5:FacultyController.showStudentFaculties();
+			break;
+		}
+	}
+	static void insert() throws SQLException {
+		System.out.println("Choose where do you want to insert new records:");
+		printTables();
+		switch(input.nextInt()) {
+		case 1:
+			System.out.println("Enter first and last name on separate lines:");
+			String firstName = input.nextLine();
+			String lastName = input.nextLine();
+			StudentController.insertStudent(firstName, lastName);
+			break;
+		case 2:
+			System.out.println("Enter course name:");
+			String name = input.nextLine();
+			System.out.println("Enter description about the course:");
+			String descr = input.nextLine();
+			System.out.println("Enter the amout of credits:");
+			int credits = input.nextInt();
+			CoursesController.insertCourse(name, descr, credits);
+			break;
+		case 3:
+			System.out.println("Enter the id of the student you want to record:");
+			int student_id = input.nextInt();
+			System.out.println("Enther the desired course id for this student");
+			int course_id = input.nextInt();
+			CoursesController.insertStudentIntoCourse(student_id, course_id);
+			break;
+		case 4:
+			System.out.println("Enter the name for the new faculty:");
+			FacultyController.insertNewFaculty(input.nextLine());
+			break;
+		case 5:
+			System.out.println("Enter the id of the student you want to record:");
+			int student_id1 = input.nextInt();
+			System.out.println("Enther the desired faculty id for this student");
+			int faculty_id = input.nextInt();
+			FacultyController.insertStudentIntoFaculty(student_id1, faculty_id);
+			break;
+		}
+	}
+	static void delete() {
+		System.out.println("Choose where do you want to delete records:");
+		printTables();
+		switch(input.nextInt()) {
+		case 1:
+			System.out.println("Enter the id of the student you want to delete");
+			StudentController.deleteStudent(input.nextInt());
+			break;
+		case 2:
+			System.out.println("Enter the name of the course you want to delete");
+			CoursesController.deleteCourse(input.nextLine());
+			break;
+		case 3:
+			System.out.println("Enter the id of the student you want to remove from a course:");
+			int student_id=input.nextInt();
+			System.out.println("Enter the id of the course:");
+			int course_id=input.nextInt();
+			CoursesController.removeStudentFromCourse(student_id, course_id);
+			break;
+		case 4:
+			System.out.println("Enter the name of the faculty you want to delete:");
+			FacultyController.deleteFaculty(input.nextLine());
+			break;
+		case 5:
+			System.out.println("Enter the id of the student you want to unsign from his faculty:");
+			FacultyController.deleteStudentFromFaculty(input.nextInt());
+			break;
+		}
 		
-		System.out.println("\nList of all students:");
-		StudentController.showAllStudents();
-		System.out.println("\nList of all courses:");
-		CoursesController.showAllCourses();
-		System.out.println("\nList of all courses students have subscribed to:");
-		CoursesController.showStudentCourses();
-		System.out.println("\nList of all faculties:");
-		FacultyController.showAllFaculties();
-		System.out.println("\nStudents listed by faculties:");
-		FacultyController.showStudentFaculties();
+	}
+	static void printTables() {
+		System.out.println("1.All students");
+		System.out.println("2.All courses");
+		System.out.println("3.Students listed by their choosen courses");
+		System.out.println("4.All faculties");
+		System.out.println("5.Students listed by their choosen faculties");
 	}
 }
