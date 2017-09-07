@@ -4,29 +4,34 @@ import java.sql.SQLException;
 public class ProgrammLogic {
 		
 	static DataBase db;
-	static ResultSet students;
+	static ResultSet queryResult;
 	
 	public static void main(String[] args) throws SQLException {
 		db = new DataBase("jdbc:postgresql://localhost:2704/geekyCamp", "postgres", "12345");
 		showAllStudents();
-		insertStudent("Kamen","Vakavchiev");
-		showAllStudents();
-		deleteStudent(2);
-		showAllStudents();
 	}
-	//works
+	//course functions
+	
+	
+	static void showAllCourses() throws SQLException {
+		queryResult = db.executeQuery("SELECT * FROM courses");
+		while(queryResult.next()) {
+			System.out.println(queryResult.getInt(1)+" | " +queryResult.getString(2)+" | "+queryResult.getString(3)+" | "+queryResult.getString(4));
+		}
+	}
+	static void insertCourse(String name, String descr,int credits) {
+		db.executeQuery("Insert into courses(coursename,coursedescr,credits)values('"+name+"','"+descr+"',"+credits+")");
+	}
+	static void deleteCourse(int id) {
+		db.executeQuery("DELETE FROM courses where id="+id);
+	}
+	//student functions
 	static void showAllStudents() throws SQLException {
-		students = db.executeQuery("SELECT * FROM students");
-		while(students.next()) {
-			System.out.println(students.getInt(1)+" | " +students.getString(2)+" | "+students.getString(3));
+		queryResult = db.executeQuery("SELECT * FROM students");
+		while(queryResult.next()) {
+			System.out.println(queryResult.getInt(1)+" | " +queryResult.getString(2)+" | "+queryResult.getString(3));
 		}
 	}
-	static void showAllCourses(ResultSet courses) throws SQLException {
-		while(courses.next()) {
-			System.out.println(courses.getInt(1)+" | " +courses.getString(2)+" | "+courses.getString(3)+" | "+courses.getString(4));
-		}
-	}
-	//works
 	static void deleteStudent(int id) {
 		db.executeQuery("delete from students where studid = "+id);
 	}
