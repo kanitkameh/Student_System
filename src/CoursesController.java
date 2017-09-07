@@ -25,16 +25,19 @@ public class CoursesController {
 		}
 	}
 	static void insertCourse(String name, String descr,int credits) {
-		db.executeQuery("Insert into courses(coursename,coursedescr,credits)values('"+name+"','"+descr+"',"+credits+")");
+		db.executeQuery("Insert into courses(course_name,course_description,credits)values('"+name+"','"+descr+"',"+credits+")");
 	}
 	static void deleteCourse(int id) {
 		db.executeQuery("DELETE FROM courses where id="+id);
 	}
-	static void removeStudentFromCourse(int stud_id, int course_id) {
-		db.executeQuery("delete from studentcourses where student_id="+stud_id+" AND course_id="+course_id);
+	static void deleteCourse(String name) {
+		db.executeQuery("DELETE FROM courses where course_name="+name);
+	}
+	static void removeStudentFromCourse(int student_id, int course_id) {
+		db.executeQuery("delete from studentcourses where student_id="+student_id+" AND course_id="+course_id);
 	}
 	static void showStudentCourses() throws SQLException {
-		queryResult = db.executeQuery("Select distinct students.firstname, students.lastname, courses.coursename\r\n" + 
+		queryResult = db.executeQuery("Select distinct students.first_name, students.last_name, courses.course_name\r\n" + 
 				"from studentcourses left join students on students.id=studentcourses.student_id left join\r\n" + 
 				"courses on courses.id=studentcourses.course_id;");
 		while(queryResult.next()) {

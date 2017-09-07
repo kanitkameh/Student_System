@@ -15,11 +15,18 @@ public class ProgrammLogic {
 		CoursesController.setDb(db);
 		CoursesController.setQueryResult(queryResult);
 		
+		FacultyController.setDb(db);
+		FacultyController.setQueryResult(queryResult);
+		
 		System.out.println("\nList of all students:");
 		StudentController.showAllStudents();
 		System.out.println("\nList of all courses:");
 		CoursesController.showAllCourses();
 		System.out.println("\nList of all courses students have subscribed to:");
 		CoursesController.showStudentCourses();
+		System.out.println("\nList of all faculties:");
+		FacultyController.showAllFaculties();
+		System.out.println("\nStudents listed by faculties:");
+		FacultyController.showStudentFaculties();
 	}
 }

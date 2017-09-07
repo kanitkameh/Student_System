@@ -2,7 +2,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class StudentController {
-
+	
 	static DataBase db;
 	static ResultSet queryResult;
 	
@@ -26,7 +26,7 @@ public class StudentController {
 		}
 	}
 	static void deleteStudent(int id) {
-		db.executeQuery("delete from students where studid = "+id);
+		db.executeQuery("delete from students where id = "+id);
 	}
 	static void insertStudent(String firstName, String lastName) {
 		db.executeQuery("insert into students (first_name,last_name) values('"+firstName+"','"+lastName+"')");
