@@ -22,7 +22,7 @@ public class ProgrammLogic {
 		int choice=0;
 		while(true) {
 			System.out.println("Type 1 for viewing a table, 2 for inserting a new element, 3 for deleting an element and 4 for exit:");
-			choice=input.nextInt();
+			choice=Integer.parseInt(input.nextLine());
 			switch(choice){
 			case 1:view();
 				break;
@@ -38,7 +38,7 @@ public class ProgrammLogic {
 	static void view() throws SQLException {
 		System.out.println("Choose which records do you want to see:");
 		printTables();
-		switch(input.nextInt()) {
+		switch(Integer.parseInt(input.nextLine())) {
 		case 1:StudentController.showAllStudents();
 			break;
 		case 2:CoursesController.showAllCourses();
@@ -54,12 +54,13 @@ public class ProgrammLogic {
 	static void insert() throws SQLException {
 		System.out.println("Choose where do you want to insert new records:");
 		printTables();
-		switch(input.nextInt()) {
+		switch(Integer.parseInt(input.nextLine())) {
 		case 1:
-			System.out.println("Enter first and last name on separate lines:");
-			String firstName = input.nextLine();
-			String lastName = input.nextLine();
-			StudentController.insertStudent(firstName, lastName);
+			System.out.println("Enter first name of the student");
+			String first_name=input.nextLine();
+			System.out.println("Enter last name of the student");
+			String last_name=input.nextLine();
+			StudentController.insertStudent(first_name,last_name);
 			break;
 		case 2:
 			System.out.println("Enter course name:");
@@ -67,14 +68,14 @@ public class ProgrammLogic {
 			System.out.println("Enter description about the course:");
 			String descr = input.nextLine();
 			System.out.println("Enter the amout of credits:");
-			int credits = input.nextInt();
+			int credits = Integer.parseInt(input.nextLine());
 			CoursesController.insertCourse(name, descr, credits);
 			break;
 		case 3:
 			System.out.println("Enter the id of the student you want to record:");
-			int student_id = input.nextInt();
+			int student_id = Integer.parseInt(input.nextLine());
 			System.out.println("Enther the desired course id for this student");
-			int course_id = input.nextInt();
+			int course_id = Integer.parseInt(input.nextLine());
 			CoursesController.insertStudentIntoCourse(student_id, course_id);
 			break;
 		case 4:
@@ -83,9 +84,9 @@ public class ProgrammLogic {
 			break;
 		case 5:
 			System.out.println("Enter the id of the student you want to record:");
-			int student_id1 = input.nextInt();
+			int student_id1 = Integer.parseInt(input.nextLine());
 			System.out.println("Enther the desired faculty id for this student");
-			int faculty_id = input.nextInt();
+			int faculty_id = Integer.parseInt(input.nextLine());
 			FacultyController.insertStudentIntoFaculty(student_id1, faculty_id);
 			break;
 		}
@@ -93,20 +94,20 @@ public class ProgrammLogic {
 	static void delete() {
 		System.out.println("Choose where do you want to delete records:");
 		printTables();
-		switch(input.nextInt()) {
+		switch(Integer.parseInt(input.nextLine())) {
 		case 1:
 			System.out.println("Enter the id of the student you want to delete");
-			StudentController.deleteStudent(input.nextInt());
+			StudentController.deleteStudent(Integer.parseInt(input.nextLine()));
 			break;
 		case 2:
 			System.out.println("Enter the name of the course you want to delete");
-			CoursesController.deleteCourse(input.nextLine());
+			CoursesController.deleteCourse(Integer.parseInt(input.nextLine()));
 			break;
 		case 3:
 			System.out.println("Enter the id of the student you want to remove from a course:");
-			int student_id=input.nextInt();
+			int student_id=Integer.parseInt(input.nextLine());
 			System.out.println("Enter the id of the course:");
-			int course_id=input.nextInt();
+			int course_id=Integer.parseInt(input.nextLine());
 			CoursesController.removeStudentFromCourse(student_id, course_id);
 			break;
 		case 4:
@@ -115,7 +116,7 @@ public class ProgrammLogic {
 			break;
 		case 5:
 			System.out.println("Enter the id of the student you want to unsign from his faculty:");
-			FacultyController.deleteStudentFromFaculty(input.nextInt());
+			FacultyController.deleteStudentFromFaculty(Integer.parseInt(input.nextLine()));
 			break;
 		}
 		
