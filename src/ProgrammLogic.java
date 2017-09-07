@@ -2,17 +2,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ProgrammLogic {
-		
+	
 	static DataBase db;
 	static ResultSet queryResult;
 	
 	public static void main(String[] args) throws SQLException {
 		db = new DataBase("jdbc:postgresql://localhost:2704/geekyCamp", "postgres", "12345");
-		showAllStudents();
+		insertStudent("Kamen","Vakavchiev");
 	}
 	//course functions
-	
-	
 	static void showAllCourses() throws SQLException {
 		queryResult = db.executeQuery("SELECT * FROM courses");
 		while(queryResult.next()) {
